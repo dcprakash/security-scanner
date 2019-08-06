@@ -23,3 +23,9 @@ Search and return security groups that match input as source; also, search IAM f
 `python iam-scanner.py -i AKIATXEBR43QPI3V4568 -t 90`
 
 `python iam-scanner.py -t 90`
+
+
+**secure session**
+
+If -a <account_id> -r <role_name> is passed as input parameter
+As long as user has assume permissions to that role, this app will use secure sts session.
