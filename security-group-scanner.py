@@ -1,3 +1,10 @@
+# This app accepts either IPV4 address or security group id as input parameter
+# Scans AWS environment for security group that matches input parameter as source ip/ sg
+# returns and prints data in json format
+#
+# Author: Darshan Chinvar Prakash
+
+
 import sys
 from libs.auth import (
     setup_session,
@@ -5,11 +12,32 @@ from libs.auth import (
     setup_clients
 )
 import getopt
+import json
 import logging
 
 logging.basicConfig(level=logging.INFO)
 
 
+##
+# @brief Scans AWS environment for security group that matches input parameter as source ip/ sg
+# @param [in] client: (object) boto session object in dict format
+# @param [in] Filters: (List) filter to scan security group
+# @return (content) json content
+#
+def scan_security_groups(client, Filters):
+    # scan security groups
+    paginator = client['ec2'].get_paginator('describe_security_groups')
+    response = paginator.paginate(Filters=Filters)
+    content = {}
+    for page in response:
+        for sg in page['SecurityGroups']:
+            content.update({sg['GroupName']:sg})
+    return json.dumps(content)
+
+
+##
+# @brief helper method
+#
 def usage():
     logging.error("Example use cases: \n"
                   "python security-group-scanner.py -i 34.218.234.32/27 \n"
@@ -64,13 +92,5 @@ if __name__ == '__main__':
         usage()
         sys.exit(2)
 
-    # scan security groups
-    paginator = client['ec2'].get_paginator('describe_security_groups')
-    response = paginator.paginate(Filters=Filters)
-    for page in response:
-        for sg in page['SecurityGroups']:
-            logging.info("Security Group {} matches either CIDR or another SG as source".format(sg['GroupName']))
-
-
-# assumption resgion = us-west-2, otherwise pass region
-# ipv4
+    response = scan_security_groups(client, Filters)
+    print(response)
