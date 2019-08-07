@@ -17,13 +17,13 @@ iam-scanner accepts iam access key and/or age (number of days) as input paramete
 
 **How to run**
 
-`python security-group-scanner.py -i 34.218.234.32/27`
+`python security-group-scanner.py -i 34.218.123.32/27`
 
-`python security-group-scanner.py -s sg-04e33457ab27d2396`
+`python security-group-scanner.py -s sg-04e33457ab27d1234`
 
-`python iam-scanner.py -i AKIATXEBR43QPI3V4568`
+`python iam-scanner.py -i AKIATXEBR43QPI3V1234`
 
-`python iam-scanner.py -i AKIATXEBR43QPI3V4568 -t 90`
+`python iam-scanner.py -i AKIATXEBR43QPI3V1234 -t 90`
 
 `python iam-scanner.py -t 90`
 
