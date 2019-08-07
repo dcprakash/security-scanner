@@ -1,5 +1,8 @@
 # security-scanner
-Search and return security groups that match input as source; also, search IAM for user activity
+This app has two modules: security-group-scanner.py and iam-scanner.py.
+security-group-scanner accepts either ipv4 address or security group id as input parameter; scans aws environment to identify security groups that contains input parameter as source cidr or sg.
+iam-scanner accepts iam access key and/or age (number of days) as input parameter; scans aws environment for aws iam access key and returns its contents. If age parameters has passed as input, this will also return all iam keys that are older than given age.
+
 
 **Prerequisites**
 -   python 3+
